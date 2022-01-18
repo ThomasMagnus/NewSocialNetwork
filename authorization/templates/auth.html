@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}Авторизация{% endblock %}
+{% block links %}
+    <link rel="stylesheet" href="{% static 'styles/auth.min.css' %}">
+{% endblock %}
+
+{% block main %}
+    <form class="enter__form">
+        {% csrf_token %}
+        {{form}}
+        <button class="enter__btn">Войти</button>
+    </form>
+    <div class="links">
+        <a href="/reg" class="enter__link">Регистрация</a>
+        <a href="/" class="enter__link">Забыл пароль</a>
+    </div>
+{% endblock %}
+{% block scripts %}
+        <script src="{% static 'js/auth.min.js' %}" type="application/javascript"></script>
+{% endblock %}

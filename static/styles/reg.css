@@ -1,0 +1,27 @@
+.main {
+    position: relative;
+}
+
+.reg__form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.user__data {
+    margin-top: 10px;
+}
+
+.enter__form {
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.reg__form input {
+    margin: 5px;
+}
+
+.enter__btn {
+    margin-top: 5px;
+}
