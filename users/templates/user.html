@@ -4,8 +4,9 @@
 {% block title %}Домашняя страница{% endblock %}
 
 {% block link %}
-    <link rel="stylesheet" href="{% static 'css/user.min.css' %}">{% endblock %}
-
+    <link rel="stylesheet" href="{% static 'css/user.min.css' %}">
+    <link rel="shortcat icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+{% endblock %}
 {% block main %}
     <section class="userCover">
         <div class="userCover__img">
@@ -25,8 +26,11 @@
                 <p class="userCover__name">{{ name }}</p>
             </div>
             <div class="userCover__edit_wrapper">
-                <i class="fa fa-camera" aria-hidden="true"></i>
-                <a href="#" class="userCover__edit">Изменить изображение</a>
+                <input type="file" name="file" id="input_file" class="userCover__edit" multiple>
+                <label class="input__file-button" for="input_file">
+                    <i class="fa fa-camera" aria-hidden="true"></i>
+                    <span class="input__file-button-text">Изменить изображение</span>
+                </label>
             </div>
         </div>
     </section>
@@ -251,7 +255,7 @@
                                     <div class="content__info-time">
                                         <i class="fa fa-pencil" aria-hidden="true"
                                            title="Опубликовано: {{ item.user_date }}"></i>
-                                        <div class="time_create">{{ date|add:item.user_date }}</div>
+                                        <p class="time_create">Опубликовано: {{ item.user_date }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -262,7 +266,7 @@
                                         <i class="fa fa-pencil" aria-hidden="true"></i>
                                         Редактировать
                                     </li>
-                                    <li class="ellipsis__item">
+                                    <li class="ellipsis__item ellipsis__del">
                                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                                         Удалить
                                     </li>
@@ -270,7 +274,7 @@
                             </div>
                         </div>
                         <div class="content__text-edit">
-                            <p class="content__text">{{ item.post }}</p>
+                            <p class="content__text" data-id={{item.id}}>{{ item.post }}</p>
                             <div class="content__panel">
                                 <div class="cancel__wrapper">
                                     <div class="content__cancel" title="Отмена">
@@ -290,42 +294,9 @@
                 <ul class="community__list">
                     {% for item in news_data %}
                         <li class="community__item">
-                            <a href="{{ item.link }}" class="community__link" target="_blank">{{ item.title }}</a>
+                            <a href="{{ item.link }}" class="community__link" target="_blank">{{item.title}}</a>
                         </li>
                     {% endfor %}
-{#                    <li class="community__item">#}
-{#                        <a href="#" class="community__link" target="_blank">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis#}
-{#                            nesciunt voluptates minima id at. Quis distinctio quo consequatur eos maiores delectus#}
-{#                            expedita, sint amet dolorem dicta iste fugit molestias aperiam.</a>#}
-{#                    </li>#}
-{#                    <li class="community__item">#}
-{#                        <h2 class="community__title">Заголовок</h2>#}
-{#                        <p class="community__text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis#}
-{#                            nesciunt voluptates minima id at. Quis distinctio quo consequatur eos maiores delectus#}
-{#                            expedita, sint amet dolorem dicta iste fugit molestias aperiam.</p>#}
-{#                        <a href="#" class="community__link" target="_blank">Источник</a>#}
-{#                    </li>#}
-{#                    <li class="community__item">#}
-{#                        <h2 class="community__title">Заголовок</h2>#}
-{#                        <p class="community__text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis#}
-{#                            nesciunt voluptates minima id at. Quis distinctio quo consequatur eos maiores delectus#}
-{#                            expedita, sint amet dolorem dicta iste fugit molestias aperiam.</p>#}
-{#                        <a href="#" class="community__link" target="_blank">Источник</a>#}
-{#                    </li>#}
-{#                    <li class="community__item">#}
-{#                        <h2 class="community__title">Заголовок</h2>#}
-{#                        <p class="community__text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis#}
-{#                            nesciunt voluptates minima id at. Quis distinctio quo consequatur eos maiores delectus#}
-{#                            expedita, sint amet dolorem dicta iste fugit molestias aperiam.</p>#}
-{#                        <a href="#" class="community__link" target="_blank">Источник</a>#}
-{#                    </li>#}
-{#                    <li class="community__item">#}
-{#                        <h2 class="community__title">Заголовок</h2>#}
-{#                        <p class="community__text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis#}
-{#                            nesciunt voluptates minima id at. Quis distinctio quo consequatur eos maiores delectus#}
-{#                            expedita, sint amet dolorem dicta iste fugit molestias aperiam.</p>#}
-{#                        <a href="#" class="community__link" target="_blank">Источник</a>#}
-{#                    </li>#}
                 </ul>
             </div>
         </section>

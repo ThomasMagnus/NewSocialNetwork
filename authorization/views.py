@@ -40,6 +40,8 @@ class LoginUser(LoginView):
                     login(request, user)
                     request.session['userid'] = user.id
                     return redirect(f'http://localhost:8000/users/{user_id}')
+                else:
+                    return HttpResponse('Неверно указан логин или пароль')
             except:
                 return HttpResponse('Неверно указан логин или пароль')
 

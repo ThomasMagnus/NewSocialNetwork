@@ -86,13 +86,30 @@
   -webkit-transition: all 0.1s linear;
   -o-transition: all 0.1s linear;
   transition: all 0.1s linear;
-  padding: 10px 20px;
+  position: relative;
 }
 
 .userCover__edit_wrapper:hover {
   cursor: pointer;
   color: #fff;
   background-color: #54595e;
+}
+
+.userCover__edit_wrapper .input__file-button {
+  cursor: pointer;
+  width: 100%;
+  max-width: 250px;
+  padding: 10px 20px;
+}
+
+.userCover__edit_wrapper .userCover__edit {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+}
+
+.userCover__edit_wrapper .input__file-button-text {
+  margin-left: 10px;
 }
 
 .userCover__edit {
@@ -401,7 +418,8 @@
 }
 
 .section__wrapper .content__edit-btn {
-  background: #f75411 none;
+  background: none;
+  background-color: #f75411;
   border: none;
   border-radius: 20px;
   color: #fff;
@@ -524,6 +542,10 @@
 .section__wrapper .community__link {
   display: block;
   margin-top: 10px;
+  color: #000;
+}
+
+.section__wrapper .community__link:hover {
   color: #2186c4;
 }
 

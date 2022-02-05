@@ -2,25 +2,34 @@ document.addEventListener('DOMContentLoaded', () => {
     'use strict'
 
     const userCover = document.querySelector(".userCover"),
-          userCoverEdit = document.querySelector(".userCover__edit_wrapper"),
+          userCoverEditWrapper = document.querySelector(".userCover__edit_wrapper"),
           editDots = document.querySelectorAll('.fa-ellipsis-v'),
           ellipsisList = document.querySelectorAll('.ellipsis__list'),
           editPostElem = document.querySelectorAll('.edit-post'),
-          faTrash = document.querySelectorAll('fa-trash-o'),
           contentCancel = document.querySelectorAll('.cancel__wrapper'),
-          communityLink = document.querySelectorAll('.community__link'),
           contentBtn = document.querySelector('.content__btn'),
-          comment = document.querySelector('#comment'),
-          content__form = document.querySelector('.content__form');
+          content__form = document.querySelector('.content__form'),
+          contentEditBtn = document.querySelectorAll('.content__edit-btn'),
+          ellipsisDel = document.querySelectorAll('.ellipsis__del'),
+          userCoverEdit = document.querySelector('.userCover__edit');
 
     let target, parentElement, contentTextEdit, contentPanel;
 
+    const postData = async (data, url, header) => {
+        return await fetch(url, {
+            method: 'POST',
+            body: data,
+            headers: header,
+            credentials: 'include'
+        })
+    }
+
     const showEdit = () => {
-        userCoverEdit.classList.toggle('edit__active')
+        userCoverEditWrapper.classList.toggle('edit__active')
     }
 
     const hideEdit = () => {
-        userCoverEdit.classList.remove('edit__active')
+        userCoverEditWrapper.classList.remove('edit__active')
     }
 
     const announceVars = e => {
@@ -30,15 +39,14 @@ document.addEventListener('DOMContentLoaded', () => {
         contentPanel = parentElement.querySelector('.content__panel')
     }
 
-    const showEditDotsMessege = e => {
+    const showEditDotsMessage = e => {
 
         let index = detectDotsMessage()
 
         announceVars(e)
 
         const element = target.parentElement.querySelector('.ellipsis__list')
-
-        if (index && ellipsisList[index] == element) {
+        if (index && ellipsisList[index] === element) {
             element.classList.remove('active_disp')
             return
         }
@@ -48,16 +56,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const detectDotsMessage = () => {
         let indexElem;
-
         ellipsisList.forEach((item, i) => {
             if (item.classList.contains('active_disp')) {
                 item.classList.remove('active_disp')
                 indexElem = i
             }
         })
-
         return indexElem
-
     }
 
     const editPost = e => {
@@ -65,16 +70,22 @@ document.addEventListener('DOMContentLoaded', () => {
         announceVars(e)
 
         const element = parentElement.querySelector('.content__text')
-        const texarea = document.createElement('textarea')
+        const editPostForm = document.createElement('form')
+        const textarea = document.createElement('textarea')
         const contentTextEdit = parentElement.querySelector('.content__text-edit')
         const contentPanel = parentElement.querySelector('.content__panel')
 
         detectDotsMessage()
+
+        editPostForm.classList.add('edit_post_form')
         element.style.display = 'none'
 
-        texarea.classList.add('edit__content')
-        texarea.value = element.textContent
-        contentTextEdit.before(texarea)
+        textarea.classList.add('edit__content')
+        textarea.setAttribute('data-id', element.getAttribute('data-id'))
+        textarea.setAttribute('name', 'editPost')
+        editPostForm.append(textarea)
+        textarea.value = element.textContent
+        contentTextEdit.before(editPostForm)
 
         contentPanel.style.display = 'flex'
     }
@@ -90,28 +101,30 @@ document.addEventListener('DOMContentLoaded', () => {
         contentText.style.display = 'block'
     }
 
-    userCover.addEventListener("mouseenter", showEdit)
-    userCover.addEventListener("mouseleave", hideEdit)
+    const editPostText = () => {
+        const editPostForm = document.querySelector('.edit_post_form');
+        let postValue = editPostForm.querySelector('.edit__content')
 
-    editDots.forEach(element => {
-        element.addEventListener('click', showEditDotsMessege)
-    });
+        const formData = {
+            editPost: postValue.value,
+            id: postValue.getAttribute('data-id')
+        }
 
-    editPostElem.forEach(item => {
-        item.addEventListener('click', editPost)
-    })
+        const jsonData = JSON.stringify(formData)
 
-    contentCancel.forEach(item => {
-        item.addEventListener('click', cancelEditPost)
-    })
+        postData(jsonData, 'http://localhost:8000/createPost/edit/', getCookie())
+            .then(response => console.log(response))
+            .finally(() => {
+                document.location.reload()
+            })
+    }
 
-    const postData = e => {
-        e.preventDefault()
+    const getCookie = () => {
 
-        const getCookie = name => {
+        const getCookieString = name => {
             let cookieValue = null
-            
-            if (document.cookie && document.cookie != '') {
+
+            if (document.cookie && document.cookie !== '') {
                 const cookies = document.cookie.split(';')
                 for (let i=0; i <= cookies.length - 1; i++) {
                     if (cookies[i].substring(0, name.length + 1) === (name + '=')) {
@@ -122,25 +135,60 @@ document.addEventListener('DOMContentLoaded', () => {
 
             return cookieValue
         }
-        // Заголовки для CORS
+
         const headers = new Headers()
-        headers.append('X-CSRFToken', getCookie('csrftoken'))
+        headers.append('X-CSRFToken', getCookieString('csrftoken'))
+
+        return headers
+    }
+
+    const postDataForm = (e) => {
+        e.preventDefault()
 
         const formData = new FormData(content__form)
 
-        fetch('http://localhost:8000/createPost/', {
-            method: 'POST',
-            body: formData,
-            headers: headers,
-            credentials: 'include'
-        })
-        .then(response => {
-            console.log(response)
-            document.location.reload()
-        })
+        if (document.querySelector('#comment').value !== ""){
+
+            postData(formData, 'http://localhost:8000/createPost/', getCookie())
+                .then(response => console.log(response))
+                .finally(() => {
+                    content__form.reset()
+                    document.location.reload()
+                })
+        }
     }
 
-    contentBtn.addEventListener('click', e => {
-        postData(e)
-    })
+    const deletePost = e => {
+        const target = e.target
+        const postText = target.closest('.content__item').querySelector('.content__text')
+        target.closest('.ellipsis__list ').classList.remove('active_disp')
+
+        const formData = {
+            postId: postText.getAttribute('data-id')
+        }
+
+        const jsonData = JSON.stringify(formData)
+
+        postData(jsonData, 'http://localhost:8000/createPost/deletePost/', getCookie())
+            .then(response => console.log(response))
+            .finally(() => document.location.reload())
+
+    }
+
+    const changeCoverPhoto = () => {
+        const fileName = userCoverEdit.files[0].name
+
+        postData()
+    }
+
+
+    userCover.addEventListener("mouseenter", showEdit)
+    userCover.addEventListener("mouseleave", hideEdit)
+    editDots.forEach(element => element.addEventListener('click', showEditDotsMessage))
+    editPostElem.forEach(item => item.addEventListener('click', editPost))
+    contentCancel.forEach(item => item.addEventListener('click', cancelEditPost))
+    contentEditBtn.forEach(item => item.addEventListener('click', editPostText))
+    contentBtn.addEventListener('click', e => postDataForm(e))
+    ellipsisDel.forEach(item => item.addEventListener('click', e => deletePost(e)))
+    userCoverEdit.addEventListener('change', changeCoverPhoto)
 })

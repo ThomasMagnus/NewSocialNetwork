@@ -20,12 +20,13 @@ def user_template(request, user_id):
     post = None
 
     try:
-        post = Posts.objects.filter(user_id=user_id)
+        post = Posts.objects.filter(user_id=user_id).order_by('-user_date')
     except Posts.DoesNotExist:
         print('Нет постов')
 
     try:
         if request.session['userid']:
+
             name = f'{user.first_name} {user.last_name}'
             date = datetime.datetime.now().date()
 
@@ -35,7 +36,8 @@ def user_template(request, user_id):
             data_dict = {**data_dict, **{'name': name, 'user_id': user_id, 'user_post_dict': post, 'date': date,
                                          'news_data': news_data}}
             return render(request, 'user.html', data_dict)
-    except:
+    except Exception as ex:
+        print(ex)
         return redirect(to='/')
 
 
