@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
           content__form = document.querySelector('.content__form'),
           contentEditBtn = document.querySelectorAll('.content__edit-btn'),
           ellipsisDel = document.querySelectorAll('.ellipsis__del'),
-          userCoverEdit = document.querySelector('.userCover__edit');
+          userCoverEdit = document.querySelector('.userCover__edit'),
+          errorlist = document.querySelector('.errorlist');
 
     let target, parentElement, contentTextEdit, contentPanel;
 
@@ -20,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
             method: 'POST',
             body: data,
             headers: header,
-            credentials: 'include'
+            credentials: 'include',
         })
     }
 
@@ -138,7 +139,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const headers = new Headers()
         headers.append('X-CSRFToken', getCookieString('csrftoken'))
-
         return headers
     }
 
@@ -175,10 +175,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
-    const changeCoverPhoto = () => {
-        const fileName = userCoverEdit.files[0].name
+    const changeCoverPhoto = (e) => {
+        const fileName = userCoverEdit.files[0]
+        const target = e.target;
 
-        postData()
+        const formData = new FormData()
+        formData.append('file', target.files[0])
+
+        const header = {
+            'Content-Type': 'multipart/form-data',
+        }
+
+        const headers = {...header, ...getCookie()}
+
+        postData(formData, 'http://localhost:8000/users/changeCover/photo', headers)
+            .then(response => console.log(response))
+    }
+
+    const delErrorList = () => {
+        errorlist.style.display = 'none'
     }
 
 
@@ -191,4 +206,6 @@ document.addEventListener('DOMContentLoaded', () => {
     contentBtn.addEventListener('click', e => postDataForm(e))
     ellipsisDel.forEach(item => item.addEventListener('click', e => deletePost(e)))
     userCoverEdit.addEventListener('change', changeCoverPhoto)
+
+    delErrorList()
 })

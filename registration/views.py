@@ -7,7 +7,6 @@ from authorization.models import ProFile
 from services.forms import RegisterUserForm
 from services.registration import registration
 from django.contrib.auth import login
-from werkzeug.security import generate_password_hash
 from services.generate_id import generate_random_num
 from authorization.models import UserFile
 from werkzeug.security import generate_password_hash

@@ -11,8 +11,14 @@
     <section class="userCover">
         <div class="userCover__img">
             <picture>
-                <source srcset="{% static 'img/cover.webp' %}" type="image/webp">
-                <img src="{% static 'img/cover.jpg' %}" alt="cover_photo"></picture>
+                {% if cover_photo %}
+                    <source srcset="{{ cover_photo }}" type="image/webp">
+                    <img src="{{ cover_photo }}" alt="cover_photo">
+                {% else %}
+                    <source srcset="{% static 'img/cover.webp' %}" type="image/webp">
+                    <img src="{% static 'img/cover.jpg' %}" alt="cover_photo">
+                {% endif %}
+            </picture>
         </div>
         <div class="userCover__bottom">
             <div class="userCover__info">
@@ -26,7 +32,9 @@
                 <p class="userCover__name">{{ name }}</p>
             </div>
             <div class="userCover__edit_wrapper">
-                <input type="file" name="file" id="input_file" class="userCover__edit" multiple>
+                {% csrf_token %}
+                {{cover_form}}
+<!--                <input type="file" name="file" id="input_file" class="userCover__edit" multiple>-->
                 <label class="input__file-button" for="input_file">
                     <i class="fa fa-camera" aria-hidden="true"></i>
                     <span class="input__file-button-text">Изменить изображение</span>

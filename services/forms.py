@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.forms import TextInput, EmailInput, PasswordInput, CharField, EmailField
+from django.forms import TextInput, EmailInput, PasswordInput, CharField, EmailField, ImageField, FileInput
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from authorization.models import UserFile
 
 
 class UserAuthForm(forms.Form):
@@ -30,5 +31,9 @@ class RegisterUserForm(UserCreationForm):
 class AuthUserForm(AuthenticationForm):
     username = EmailField(widget=EmailInput(attrs={'class': 'user__data', 'placeholder': 'Введите email..'}), label='')
     password = CharField(widget=PasswordInput(attrs={'class': 'user__data', 'placeholder': 'Введите пароль..'}),
-                          label='')
+                         label='')
 
+
+class CoverForm(forms.Form):
+    cover_photo = ImageField(widget=FileInput(attrs={'class': 'userCover__edit', 'name': 'file', 'id': 'input_file'}),
+                      label='')

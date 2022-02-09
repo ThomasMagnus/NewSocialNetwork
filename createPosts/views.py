@@ -1,5 +1,4 @@
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponse
 from .models import Posts
 from services.generate_id import generate_random_num
 from django.contrib.auth.models import User
@@ -28,7 +27,7 @@ def edit_post(request):
         return HttpResponse('Пост изменён!')
 
 
-def delPOst(request):
+def delPost(request):
     if request.method == 'POST':
         data = int(json.loads(request.body)['postId'])
         Posts.objects.filter(id=data).delete()

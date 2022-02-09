@@ -19,9 +19,10 @@ class UserFile(models.Model):
     first_login = models.DateTimeField()
     lastJoin = models.DateTimeField()
     dateJoin = models.DateTimeField()
+    cover_photo = models.ImageField(upload_to='images/%Y/%m/%d')
 
     def __str__(self):
-        return f'{self.email}, {self.user_login}'
+        return f'{self.email}, {self.user_login}, {self.cover_photo}'
 
 
 class ProFile(models.Model):
