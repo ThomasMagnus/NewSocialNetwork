@@ -24,9 +24,10 @@ class LoginUser(LoginView):
 
         try:
             if request.session['userid']:
+                print(request.session['userid'])
                 return redirect(to=f"http://localhost:8000/users/{request.session['userid']}")
         except Exception as ex:
-            print(ex)
+            pass
 
         if request.method == 'POST':
             email = form.data['email']

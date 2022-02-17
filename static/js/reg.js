@@ -15,7 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const errors = {
             errorPass: 'Пароли не совпадают',
-            errorInputs: 'Не все поля заполнены'
+            errorInputs: 'Не все поля заполнены',
+            errorEmail: 'Пользователь с таким email уже существует',
+            errorLogin: 'Пользователь с таким логином уже существует'
         }
 
         const getErrorText = text => {
@@ -63,6 +65,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const createUser = e => {
+            let url;
+
             e.preventDefault()
 
             const formData = new FormData(form)
@@ -70,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (detectedValidForm()) {
 
                 detectedPassValid()
-                let url = null
 
                 if (access) {
                     fetch('/reg/', {
@@ -78,13 +81,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         body: formData
                     })
                         .then(data => {
-                            url = data.url
                             console.log(data)
+                            url = data.url
+                            console.log(url)
                             return data.text()
                         })
                         .then(response => {
-                            console.log(response)
-                            // document.location = url
+                            if (response === errors.errorEmail || response === errors.errorLogin) getErrorText(response)
+                            else document.location = url
                         })
                 }
             }

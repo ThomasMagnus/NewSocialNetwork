@@ -52,7 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-
         const authUser = e => {
             e.preventDefault()
 
@@ -71,7 +70,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
                     .then(data => {
                         if (data.status === 200) {
+                            console.log(data)
                             url = data.url
+                            console.log(url)
                         }
                         return data.text()
                     })
