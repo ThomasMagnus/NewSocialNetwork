@@ -23,9 +23,9 @@ class LoginUser(LoginView):
         form = UserAuthForm(request.POST)
 
         try:
-            if request.session['userid']:
-                print(request.session['userid'])
-                return redirect(to=f"http://localhost:8000/users/{request.session['userid']}")
+            if request.session['sessionID']:
+                print(request.session['sessionID'])
+                return redirect(to=f"http://localhost:8000/users/{request.session['sessionID']}")
         except Exception as ex:
             pass
 
@@ -39,7 +39,7 @@ class LoginUser(LoginView):
 
                 if user.check_password(raw_password=password):
                     login(request, user)
-                    request.session['userid'] = user.id
+                    request.session['sessionID'] = user.id
                     return redirect(f'http://localhost:8000/users/{user_id}')
                 else:
                     return HttpResponse('Неверно указан логин или пароль')

@@ -23,32 +23,42 @@ class RegisterUser(CreateView):
         return dict(list(context.items()))
 
     def dispatch(self, request, *args, **kwargs):
-        form = RegisterUserForm(request.POST)
         if request.method == 'POST':
-            name = f'{form.data["first_name"]} {form.data["last_name"]}'
-            user_login = form.data['username']
-            email = form.data['email']
-            password = form.data['password1']
-            id_num = generate_random_num()
-
-            if len(User.objects.filter(email=email)) > 0:
-                return HttpResponse('Пользователь с таким email уже существует')
-
-            user = User.objects.create_user(id=id_num, username=user_login, email=email,
-                                            first_name=form.data["first_name"],
-                                            last_name=form.data["last_name"], password=password)
-            user_profile = UserFile(id=id_num, user_name=name, user_login=user_login, email=email,
-                                password=generate_password_hash(password))
-            user.save()
-            user_id = user.id
-            user_profile.save()
-            profile = ProFile(user_id=user_id, user_login=user_login)
-            profile.save()
-
-            registration(user_id, name, user_login, email, generate_password_hash(password))
-            login(request, user)
-            request.session['sessionID'] = user_id
-
-            return redirect(f'http://localhost:8000/users/{user_id}')
-
+            create_user_file = CreateUserFile(request)
+            create_user_file.creator(request)
+            print(create_user_file.user.id)
+            return redirect(f'http://localhost:8000/users/{create_user_file.user.id}')
         return render(request, 'reg.html', {'form': RegisterUserForm})
+
+
+class CreateUserFile:
+
+    def __init__(self, request):
+        self.form = RegisterUserForm(request.POST)
+        self.name = f'{self.form.data["first_name"]} {self.form.data["last_name"]}'
+        self.user_login = self.form.data['username']
+        self.email = self.form.data['email']
+        self.password = self.form.data['password1']
+        self.id_num = generate_random_num()
+        self.user = None
+
+    def creator(self, request):
+        if len(User.objects.filter(email=self.email)) > 0:
+            return HttpResponse('Пользователь с таким email уже существует')
+
+        self.user = User.objects.create_user(id=self.id_num, username=self.user_login, email=self.email,
+                                             first_name=self.form.data["first_name"],
+                                             last_name=self.form.data["last_name"], password=self.password)
+
+        user_profile = UserFile(id=self.id_num, user_name=self.name, user_login=self.user_login, email=self.email,
+                                password=generate_password_hash(self.password))
+        self.user.save()
+
+        user_profile.save()
+        profile = ProFile(user_id=self.user.id, user_login=self.user_login)
+        profile.save()
+
+        registration(self.user.id, self.name, self.user_login, self.email, generate_password_hash(self.password))
+
+        login(request, self.user)
+        request.session['sessionID'] = self.user.id

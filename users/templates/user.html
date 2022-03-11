@@ -1,5 +1,6 @@
 {% extends 'user_layout.html' %}
 {% load static %}
+{% load cache %}
 
 {% block title %}Домашняя страница{% endblock %}
 
@@ -8,10 +9,11 @@
     <link rel="shortcat icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
 {% endblock %}
 {% block main %}
+    {% cache 60 cover %}
     <section class="userCover">
         <div class="userCover__img">
             <picture>
-                {% if cover_photo != " "%}
+                {% if cover_photo != " " %}
                     <source srcset="{{ cover_photo }}" type="image/webp">
                     <img src="{{ cover_photo }}" alt="cover_photo">
                 {% else %}
@@ -44,7 +46,9 @@
             </div>
         </div>
     </section>
+    {% endcache %}
     <section class="section__wrapper">
+        {% cache 60 profile %}
         <section class="profile">
             <div class="profile__user back">
                 <div class="profile__photo">
@@ -245,12 +249,15 @@
                 </div>
             </div>
         </section>
+        {% endcache %}
         <section class="content">
+            {% cache 60 form %}
             <form class="content__form">
                 {% csrf_token %}
                 <textarea name="comment" id="comment" placeholder="Напишите о чем думаете..."></textarea>
                 <button class="content__btn">Напечатать</button>
             </form>
+            {% endcache %}
             <div class="content__recordings">
                 <ul class="content__list">
                     {% for item in user_post_dict %}
@@ -318,7 +325,6 @@
         </section>
     </section>
 {% endblock %}
-
 {% block scripts %}
     <script src="{% static 'js/user.js' %}"></script>
 {% endblock %}

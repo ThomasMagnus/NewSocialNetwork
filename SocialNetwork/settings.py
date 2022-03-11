@@ -85,6 +85,13 @@ TEMPLATES = [
     },
 ]
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, 'social_network-cache'),
+    }
+}
+
 WSGI_APPLICATION = 'SocialNetwork.wsgi.application'
 
 

@@ -12,7 +12,7 @@ def get_post(request, id):
 
 def post_creator(request):
     if request.method == 'POST':
-        user = User.objects.get(id=request.session['userid'])
+        user = User.objects.get(id=request.session['sessionID'])
         data_post = request.POST.get('comment')
         posts = Posts(id=generate_random_num(), post=data_post, user_date=datetime.datetime.now(),
                       user_id=user.id, user_login=user.username)

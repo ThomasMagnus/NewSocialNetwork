@@ -1,6 +1,4 @@
 from bs4 import BeautifulSoup
-from .models import News
-import gevent.monkey
 
 import requests
 
@@ -46,4 +44,4 @@ class DataNewsCreator:
             return [{'title': item['title'], 'link': f"https://remedium.ru{item['href']}"} for item in links]
         except Exception as ex:
             print(ex)
-            return []
+            return ["Ошибка отрисовки новостного контента"]

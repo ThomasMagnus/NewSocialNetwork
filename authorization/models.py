@@ -22,7 +22,7 @@ class UserFile(models.Model):
     cover_photo = models.ImageField(upload_to='images/%Y/%m/%d')
 
     def __str__(self):
-        return f'{self.email}, {self.user_login}, {self.cover_photo}'
+        return f'{self.email}, {self.user_login}, {self.cover_photo}, {self.id}'
 
 
 class ProFile(models.Model):
