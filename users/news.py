@@ -28,6 +28,8 @@ class Parser:
         if self.getRequest():
             html = self.getRequest()
             soup = BeautifulSoup(html, 'html.parser')
+            with open('news.html', 'w', encoding='utf-8') as file:
+                file.write(html)
             return soup
         else:
             return "<p>Ошибка отрисовки новостного контента</p>"

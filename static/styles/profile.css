@@ -1,0 +1,86 @@
+.profile__photo {
+  overflow: hidden;
+  height: 120px;
+  width: 355px;
+}
+
+.profile__photo img {
+  border-radius: 10px 10px 0 0;
+}
+
+.profile {
+  width: 355px;
+  position: relative;
+}
+
+.profile__userLogo-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #fff;
+  border-radius: 50px;
+  position: absolute;
+  top: 95px;
+  left: 20px;
+  width: 70px;
+}
+
+.profile__userLogo {
+  margin: 7px 0 0 0;
+  width: 56px;
+}
+
+.profile__userLogo img {
+  border-radius: 50px;
+}
+
+.profile__name {
+  margin: 20px 0 0 100px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.profile__title {
+  color: #75828f;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.profile__title {
+  padding: 15px 0 15px 15px;
+}
+
+.profile__menu {
+  margin-top: 15px;
+}
+
+.profile__link {
+  display: block;
+  padding: 15px 0 15px 15px;
+  font-size: 14px;
+  width: 100%;
+}
+
+.profile__link i {
+  margin-right: 10px;
+  width: 16px;
+}
+
+.profile__link span {
+  font-size: 14px;
+}
+
+.profile__item {
+  color: #2186c4;
+}
+
+.profile__item:hover {
+  color: #fff;
+  background-color: #2186c4;
+}

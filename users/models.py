@@ -9,3 +9,15 @@ class News(models.Model):
 
     title = models.TextField()
     news_link = models.TextField()
+
+
+class UserData:
+    name = 'default'
+    cover_photo = ''
+    data_dict = {
+        'links': {
+            'Люди': '/',
+            'Интересные публикации': '/',
+            'Сообщества': '/',
+        },
+    }

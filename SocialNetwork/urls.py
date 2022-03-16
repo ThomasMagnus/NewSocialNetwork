@@ -9,7 +9,8 @@ urlpatterns = [
                   path('', include('authorization.urls')),
                   path('reg/', include('registration.urls')),
                   path('users/', include('users.urls')),
-                  path('createPost/', include('createPosts.urls'))
+                  path('createPost/', include('createPosts.urls')),
+                  path('friends/', include('friends.urls')),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:

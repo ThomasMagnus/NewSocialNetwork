@@ -1,0 +1,27 @@
+.community {
+  padding: 20px;
+  margin: 0;
+  width: 355px;
+}
+
+.community__item:not(:first-child) {
+  margin: 10px 0;
+}
+
+.community__title {
+  font-size: 18px;
+}
+
+.community__text {
+  margin-top: 10px;
+}
+
+.community__link {
+  display: block;
+  margin-top: 10px;
+  color: #000;
+}
+
+.community__link:hover {
+  color: #2186c4;
+}

@@ -1,3 +1,5 @@
+import logging
+
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -12,6 +14,15 @@ from services.generate_id import generate_random_num
 from authorization.models import UserFile
 from werkzeug.security import generate_password_hash
 
+logger = logging.getLogger(name='ex')
+logger.setLevel(logging.ERROR)
+
+file = logging.FileHandler(filename='error-logs.log')
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+file.setFormatter(formatter)
+logger.addHandler(file)
+
 
 class RegisterUser(CreateView):
     template_name = 'reg.html'
@@ -23,11 +34,14 @@ class RegisterUser(CreateView):
         return dict(list(context.items()))
 
     def dispatch(self, request, *args, **kwargs):
-        if request.method == 'POST':
-            create_user_file = CreateUserFile(request)
-            create_user_file.creator(request)
-            print(create_user_file.user.id)
-            return redirect(f'http://localhost:8000/users/{create_user_file.user.id}')
+        try:
+            if request.method == 'POST':
+                create_user_file = CreateUserFile(request)
+                create_user_file.creator(request)
+                print(create_user_file.user.id)
+                return redirect(f'http://localhost:8000/users/{create_user_file.user.id}')
+        except Exception as ex:
+            logger.exception(ex)
         return render(request, 'reg.html', {'form': RegisterUserForm})
 
 

@@ -6,6 +6,9 @@ from django.contrib.auth import login
 from django.contrib.auth.models import User
 
 from services.forms import UserAuthForm, AuthUserForm
+import logging
+
+module_logger = logging.getLogger('ex.authorization')
 
 
 class LoginUser(LoginView):
@@ -27,7 +30,7 @@ class LoginUser(LoginView):
                 print(request.session['sessionID'])
                 return redirect(to=f"http://localhost:8000/users/{request.session['sessionID']}")
         except Exception as ex:
-            pass
+            module_logger.exception(ex)
 
         if request.method == 'POST':
             email = form.data['email']
@@ -43,7 +46,8 @@ class LoginUser(LoginView):
                     return redirect(f'http://localhost:8000/users/{user_id}')
                 else:
                     return HttpResponse('Неверно указан логин или пароль')
-            except:
+            except Exception as ex:
+                module_logger.exception(ex)
                 return HttpResponse('Неверно указан логин или пароль')
 
         return render(request, 'auth.html', {'form': form})

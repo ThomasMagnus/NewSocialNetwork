@@ -1,0 +1,11 @@
+<section class="community back">
+    <div class="community__news">
+        <ul class="community__list">
+            {% for item in news_data %}
+                <li class="community__item">
+                    <a href="{{ item.link }}" class="community__link" target="_blank">{{item.title}}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>

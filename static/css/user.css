@@ -526,34 +526,6 @@
   color: #fff;
 }
 
-.section__wrapper .community {
-  padding: 20px;
-  margin: 0;
-  width: 355px;
-}
-
-.section__wrapper .community__item:not(:first-child) {
-  margin: 10px 0;
-}
-
-.section__wrapper .community__title {
-  font-size: 18px;
-}
-
-.section__wrapper .community__text {
-  margin-top: 10px;
-}
-
-.section__wrapper .community__link {
-  display: block;
-  margin-top: 10px;
-  color: #000;
-}
-
-.section__wrapper .community__link:hover {
-  color: #2186c4;
-}
-
 .back {
   border-radius: 10px;
   background-color: #fff;

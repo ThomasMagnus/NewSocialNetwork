@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'registration.apps.RegistrationConfig',
     'createPosts.apps.CreatepostsConfig',
     'users.apps.UserConfig',
+    'friends.apps.FriendsConfig',
     'corsheaders'
 ]
 
@@ -87,8 +88,12 @@ TEMPLATES = [
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': os.path.join(BASE_DIR, 'social_network-cache'),
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:8000',
+        'TIMEOUT': 60,
+        'OPTIONS': {
+            'server_max_value_length': 1024 * 1024 * 2,
+        }
     }
 }
 

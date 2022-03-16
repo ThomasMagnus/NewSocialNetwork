@@ -1,0 +1,71 @@
+{% load static %}
+<div class="profile__user back">
+    <div class="profile__photo">
+    <picture>
+        {% if cover_photo != " "%}
+            <source srcset="{{ cover_photo }}" type="image/webp">
+            <img src="{{ cover_photo }}" alt="cover_photo">
+        {% else %}
+            <source srcset="{% static 'img/cover.webp' %}" type="image/webp">
+            <img src="{% static 'img/cover.jpg' %}" alt="cover_photo">
+        {% endif %}
+    </picture>
+    </div>
+    <div class="profile__info">
+        <div class="profile__userLogo-wrapper">
+            <div class="profile__userLogo">
+                <picture>
+                    <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
+                    <img src="{% static 'img/user_logo.jpg' %}" alt="user__logo"></picture>
+            </div>
+        </div>
+        <p class="profile__name">{{ name }}</p>
+    </div>
+    <div class="profile__menu">
+        <p class="profile__title">Мой профиль</p>
+        <ul class="profile__list">
+            <li class="profile__item">
+                <a href="/" class="profile__link">
+                    <i class="fa fa-home icon" aria-hidden="true"></i>
+                    <span>Домой</span>
+                </a>
+            </li>
+            <li class="profile__item">
+                <a href="{% url 'friends' %}" class="profile__link">
+                    <i class="fa fa-users icon" aria-hidden="true"></i>
+                    <span>Друзья</span>
+                </a>
+            </li>
+            <li class="profile__item">
+                <a href="" class="profile__link">
+                    <i class="fa fa-camera icon" aria-hidden="true"></i>
+                    <span>Фото</span>
+                </a>
+            </li>
+            <li class="profile__item">
+                <a href="" class="profile__link">
+                    <i class="fa fa-user-circle-o icon" aria-hidden="true"></i>
+                    <span>Группы</span>
+                </a>
+            </li>
+            <li class="user__item">
+                <a href="" class="profile__link">
+                    <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+                    <span>Новости</span>
+                </a>
+            </li>
+            <li class="profile__item">
+                <a href="" class="profile__link">
+                    <i class="fa fa-cogs icon" aria-hidden="true"></i>
+                    <span>Настройки</span>
+                </a>
+            </li>
+            <li class="profile__item logout">
+                <a href="" class="profile__link">
+                    <i class="fa fa-sign-out icon" aria-hidden="true"></i>
+                    <span>Выйти</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
