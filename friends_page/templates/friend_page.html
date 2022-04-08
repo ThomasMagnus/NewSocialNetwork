@@ -1,0 +1,47 @@
+{% extends 'user_layout.html' %}
+{% load static %}
+{% load cache %}
+
+{% block link %}
+    <link rel="stylesheet" href="{% static 'styles/user_layout.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/user_layout-double.css' %}">
+    <link rel="stylesheet" href="{% static 'css/user.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/friend_page.min.css' %}">
+{% endblock %}
+
+{% block title %}{{name}}{% endblock %}
+{% block main %}
+    <section class="friend__wrapper">
+        {% include 'profile_sidebar.html' %}
+        <section class="friend__posts">
+            <section class="friend__profile">
+                <div class="friend__top">
+                    <div class="friend__avatar">
+                        <img src="{% static 'img/user_logo.jpg' %}" alt="Здесь должен быть аватар">
+                    </div>
+                    <div class="friend__info">
+                        <p class="friend__name">{{name}}</p>
+                        <small class="friend__lastLogin"><em>заходил(а) 23.02.2022 в 19:00</em></small>
+                        <p class="friend__bornDate info_fz">Дата рождения <time>04.06.1995</time></p>
+                        <p class="friend__job info_fz">Место работы: Больница №4</p>
+                        <p class="friend__jobPosition info_fz">Должность: Врач</p>
+                    </div>
+                </div>
+                <div class="friend__bottom">
+                    <ul class="friend__list">
+                        <li class="friend__item"><a href="">10 <br> друзей</a></li>
+                        <li class="friend__item"><a href="">13 <br> фото</a></li>
+                        <li class="friend__item"><a href="">3 <br> группы</a></li>
+                    </ul>
+                </div>
+            </section>
+            <section class="friend__posts">
+
+            </section>
+        </section>
+        {% include 'news_layout.html' %}
+    </section>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/friends_page.js' %}"></script>
+{% endblock %}

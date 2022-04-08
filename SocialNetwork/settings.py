@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'createPosts.apps.CreatepostsConfig',
     'users.apps.UserConfig',
     'friends.apps.FriendsConfig',
+    'friends_page.apps.FriendsPageConfig',
     'corsheaders'
 ]
 
@@ -39,7 +40,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://example.com",
     "https://sub.example.com",
     "http://localhost:4001",
-    "http://127.0.0.1:9000",
+    "http://127.0.0.1:3000",
 ]
 
 CORS_ALLOW_HEADERS = [

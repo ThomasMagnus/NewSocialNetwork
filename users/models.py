@@ -11,9 +11,11 @@ class News(models.Model):
     news_link = models.TextField()
 
 
-class UserData:
-    name = 'default'
-    cover_photo = ''
+class UserSession:
+    id = None
+    fullname = None
+    login = None
+    cover_photo = None
     data_dict = {
         'links': {
             'Люди': '/',
@@ -21,3 +23,4 @@ class UserData:
             'Сообщества': '/',
         },
     }
+

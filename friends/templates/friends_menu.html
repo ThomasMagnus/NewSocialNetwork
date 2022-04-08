@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block title %}Друзья{% endblock %}
+
 {% block main %}
     <section class="friends__wrapper">
         <section class="profile">
@@ -15,10 +16,10 @@
         <section class="friends">
             <div class="friends__links">
                 <div class="friends__listBtn">
-                    <a href="" class="active">Друзья</a>
+                    <a href="#" class="choiceLink active">Друзья</a>
                 </div>
                 <div class="friends__requestsBtn">
-                    <a href="">Запросы в друзья</a>
+                    <a href="#" class="choiceLink">Запросы в друзья</a>
                 </div>
             </div>
             <div class="friends__container">
@@ -81,10 +82,16 @@
                     </ul>
                 </div>
                 <div class="friends__requests">
-
+                    <p class="friends__requests-text">У вас, пока, нет запросов в друзья</p>
+                    <a class="friends__searchBtn" href="/">Найти друзей</a>
+                    <ul class="friends__list">
+                    </ul>
                 </div>
             </div>
         </section>
         {% include 'news_layout.html' %}
     </section>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/friends_menu.js' %}"></script>
 {% endblock %}

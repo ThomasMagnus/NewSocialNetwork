@@ -13,6 +13,7 @@ from django.contrib.auth import login
 from services.generate_id import generate_random_num
 from authorization.models import UserFile
 from werkzeug.security import generate_password_hash
+from .models import FriendsTable
 
 logger = logging.getLogger(name='ex')
 logger.setLevel(logging.ERROR)
@@ -38,7 +39,6 @@ class RegisterUser(CreateView):
             if request.method == 'POST':
                 create_user_file = CreateUserFile(request)
                 create_user_file.creator(request)
-                print(create_user_file.user.id)
                 return redirect(f'http://localhost:8000/users/{create_user_file.user.id}')
         except Exception as ex:
             logger.exception(ex)
@@ -73,6 +73,9 @@ class CreateUserFile:
         profile.save()
 
         registration(self.user.id, self.name, self.user_login, self.email, generate_password_hash(self.password))
+
+        creator = FriendsTable(f'friends_{self.user_login}')
+        creator.add_friend_table()
 
         login(request, self.user)
         request.session['sessionID'] = self.user.id

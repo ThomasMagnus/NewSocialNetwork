@@ -14,13 +14,12 @@ from authorization.models import UserFile
 from createPosts.models import Posts
 from .news import DataNewsCreator
 from services.forms import CoverForm
-from .models import UserData
+from .models import UserSession
 
 module_logger = logging.getLogger(name='ex.user')
 
 
 def user_template(request, user_id):
-
     try:
         user = User.objects.get(id=user_id)
     except Exception as ex:
@@ -33,7 +32,6 @@ def user_template(request, user_id):
         post = Posts.objects.filter(user_id=user_id).order_by('-user_date')
     except Posts.DoesNotExist:
         module_logger.exception(Posts.DoesNotExist)
-        print('Нет постов')
 
     try:
         if request.session['sessionID'] and request.session['sessionID'] == int(user_id):
@@ -45,6 +43,11 @@ def user_template(request, user_id):
             cover_form = CoverForm(request.POST, request.FILES)
             cover_photo = UserFile.objects.get(id=user_id).cover_photo
 
+            UserSession.id = user_id
+            UserSession.fullname = name
+            UserSession.login = user.username
+            UserSession.cover_photo = cover_photo
+
             try:
                 re.findall(r'\w', cover_photo.name)
             except Exception as ex:
@@ -54,11 +57,9 @@ def user_template(request, user_id):
             if len(str(cover_photo).strip()) == 0:
                 cover_photo = " "
 
-            UserData.name = name
-            UserData.cover_photo = cover_photo
-
-            data_dict = {**UserData.data_dict, **{'name': name, 'user_id': user_id, 'user_post_dict': post, 'date': date,
-                                         'news_data': news_data, 'cover_photo': cover_photo, 'cover_form': cover_form}}
+            data_dict = {**UserSession.data_dict,
+                         **{'name': name, 'user_id': user_id, 'user_post_dict': post, 'date': date,
+                            'news_data': news_data, 'cover_photo': cover_photo, 'cover_form': cover_form}}
             return render(request, 'user.html', data_dict)
         else:
             return redirect('/')

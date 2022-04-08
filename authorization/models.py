@@ -8,6 +8,7 @@ class UserFile(models.Model):
         verbose_name = 'пользователь'
         verbose_name_plural = 'Пользователи'
 
+    id = models.IntegerField(primary_key=True)
     user_name = models.CharField(max_length=128)
     user_login = models.CharField(max_length=50)
     email = models.CharField(max_length=50)
