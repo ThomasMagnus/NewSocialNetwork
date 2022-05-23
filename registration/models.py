@@ -1,4 +1,3 @@
-from django.db import models
 from sqlalchemy import MetaData, Table, Column, Text, Integer, Boolean, DateTime, create_engine
 from authorization.models import UserFile
 

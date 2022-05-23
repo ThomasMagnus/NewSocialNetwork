@@ -4,94 +4,26 @@
 
 {% block link %}
     <link rel="stylesheet" href="{% static 'css/friends_menu.min.css' %}">
+    <link href="{% static 'css/main.5004deb4.css' %}" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'styles/upload_avatar.css' %}">
 {% endblock %}
 
 {% block title %}Друзья{% endblock %}
 
 {% block main %}
+	{% cache 60 friends_page %}
     <section class="friends__wrapper">
         <section class="profile">
             {% include 'profile_sidebar.html' %}
         </section>
         <section class="friends">
-            <div class="friends__links">
-                <div class="friends__listBtn">
-                    <a href="#" class="choiceLink active">Друзья</a>
-                </div>
-                <div class="friends__requestsBtn">
-                    <a href="#" class="choiceLink">Запросы в друзья</a>
-                </div>
-            </div>
-            <div class="friends__container">
-                <div class="friends__data">
-                    <ul class="friends__list">
-                        <li class="friends__item">
-                            <a href="" class="friends__link">
-                                <div class="friends__img">
-                                    <img src="{% static 'img/user_logo.webp' %}" alt="photo">
-                                </div>
-                                <p class="friends__name">Эдуард Кузьмин</p>
-                            </a>
-                            <a href="" class="message">Написать</a>
-                        </li>
-                        <li class="friends__item">
-                            <a href="" class="friends__link">
-                                <div class="friends__img">
-                                    <img src="{% static 'img/user_logo.webp' %}" alt="photo">
-                                </div>
-                                <p class="friends__name">Эдуард Кузьмин</p>
-                            </a>
-                            <a href="" class="message">Написать</a>
-                        </li>
-                        <li class="friends__item">
-                            <a href="" class="friends__link">
-                                <div class="friends__img">
-                                    <img src="{% static 'img/user_logo.webp' %}" alt="photo">
-                                </div>
-                                <p class="friends__name">Эдуард Кузьмин</p>
-                            </a>
-                            <a href="" class="message">Написать</a>
-                        </li>
-                        <li class="friends__item">
-                            <a href="" class="friends__link">
-                                <div class="friends__img">
-                                    <img src="{% static 'img/user_logo.webp' %}" alt="photo">
-                                </div>
-                                <p class="friends__name">Эдуард Кузьмин</p>
-                            </a>
-                            <a href="" class="message">Написать</a>
-                        </li>
-                        <li class="friends__item">
-                            <a href="" class="friends__link">
-                                <div class="friends__img">
-                                    <img src="{% static 'img/user_logo.webp' %}" alt="photo">
-                                </div>
-                                <p class="friends__name">Эдуард Кузьмин</p>
-                            </a>
-                            <a href="" class="message">Написать</a>
-                        </li>
-                        <li class="friends__item">
-                            <a href="" class="friends__link">
-                                <div class="friends__img">
-                                    <img src="{% static 'img/user_logo.webp' %}" alt="photo">
-                                </div>
-                                <p class="friends__name">Анатолий Куравлев</p>
-                            </a>
-                            <a href="" class="message">Написать</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="friends__requests">
-                    <p class="friends__requests-text">У вас, пока, нет запросов в друзья</p>
-                    <a class="friends__searchBtn" href="/">Найти друзей</a>
-                    <ul class="friends__list">
-                    </ul>
-                </div>
-            </div>
+            <noscript>You need to enable JavaScript to run this app.</noscript>
+            <div class="friends" id="root"></div>
         </section>
         {% include 'news_layout.html' %}
     </section>
+	{% endcache %}
 {% endblock %}
 {% block scripts %}
-    <script src="{% static 'js/friends_menu.js' %}"></script>
+    <script defer="defer" src="{% static 'js/friends_menu.js' %}"></script>
 {% endblock %}

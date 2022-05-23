@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 
 
 class UserFile(models.Model):
@@ -14,13 +15,16 @@ class UserFile(models.Model):
     email = models.CharField(max_length=50)
     password = models.TextField()
     phone = models.CharField(max_length=14)
-    avatar = models.ImageField(upload_to='photos/%Y/%m/%d')
+    avatar = models.ImageField(upload_to='media/avatar/%Y/%m/%d')
     is_staff = models.BooleanField()
     is_superuser = models.BooleanField()
     first_login = models.DateTimeField()
-    lastJoin = models.DateTimeField()
+    last_join = models.TextField()
     dateJoin = models.DateTimeField()
     cover_photo = models.ImageField(upload_to='images/%Y/%m/%d')
+    friend_mass = ArrayField(models.TextField())
+    photo = ArrayField(models.TextField())
+    community = ArrayField(models.TextField())
 
     def __str__(self):
         return f'{self.email}, {self.user_login}, {self.cover_photo}, {self.id}'

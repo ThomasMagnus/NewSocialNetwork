@@ -1,0 +1,50 @@
+<div class="modal__layout">
+	<div class="modal__wrapper">
+		<div class="avatar__wrapper">
+			<div class="avatar__top">
+				<h2 class="avatar__title">Изменить аватар</h2>
+				<i class="fa fa-times" aria-hidden="true"></i>
+			</div>
+			<div class="avatar__middle">
+				<div class="upload__wrapper">
+					<div class="upload">
+						<a href="/" class="upload">
+							<i class="fa fa-file-text-o close" style="font-size:26px;"></i>
+							<p class="upload__text">Загрузить</p>
+						</a>
+					</div>
+					{% if avatar %}
+						<div class="upload__img_wrapper">
+							<p class="upload__title">Загруженное фото</p>
+							<div class="upload__img">
+								<img src="{{ avatar }}" alt="">
+							</div>
+						</div>
+					{% else %}
+						<p class="upload__noImg">Аватар пока не загружен. <br/>Нажмите на кнопку для загрузки</p>
+					{% endif %}
+				</div>
+				<div class="preview">
+					{% if avatar %}
+						<div class="preview__wrapper">
+						<p class="preview__title">Превью аватара</p>
+						<div class="avatar__preview">
+							<div class="preview__img">
+								<img src="{{ avatar }}" alt="Превью аватарки">
+							</div>
+						</div>
+					</div>
+					{% endif %}
+				</div>
+				<form action="" class="upload__form">
+					<input type="file" class="file">
+				</form>
+			</div>
+			{% if avatar %}
+				<div class="avatar__bottom">
+					<button class="upload__done">Готово</button>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+</div>

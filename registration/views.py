@@ -14,6 +14,7 @@ from services.generate_id import generate_random_num
 from authorization.models import UserFile
 from werkzeug.security import generate_password_hash
 from .models import FriendsTable
+from datetime import datetime
 
 logger = logging.getLogger(name='ex')
 logger.setLevel(logging.ERROR)
@@ -60,12 +61,14 @@ class CreateUserFile:
         if len(User.objects.filter(email=self.email)) > 0:
             return HttpResponse('Пользователь с таким email уже существует')
 
+        now_date = datetime.now().strftime("%d.%m.%Y" "%H:%M")
+
         self.user = User.objects.create_user(id=self.id_num, username=self.user_login, email=self.email,
                                              first_name=self.form.data["first_name"],
                                              last_name=self.form.data["last_name"], password=self.password)
 
         user_profile = UserFile(id=self.id_num, user_name=self.name, user_login=self.user_login, email=self.email,
-                                password=generate_password_hash(self.password))
+                                password=generate_password_hash(self.password), lastJoin=now_date)
         self.user.save()
 
         user_profile.save()

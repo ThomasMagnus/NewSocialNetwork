@@ -1,0 +1,25 @@
+{% extends 'user_layout.html' %}
+{% load static %}
+{% load cache %}
+
+{% block link %}
+    <link rel="stylesheet" href="{% static 'css/friends_menu.min.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/user_layout.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/user_layout-double.css' %}">
+    <link rel="stylesheet" href="{% static 'css/user.min.css' %}">
+	<meta name="description" content="Web site created using create-react-app"/>
+	<link href="/static/css/main.8e74ae32.css" rel="stylesheet">
+{% endblock %}
+
+{% block title %}{{friend_name}}{% endblock %}
+{% block main %}
+	<section class="friend__wrapper">
+        {% include 'profile_sidebar.html' %}
+        <div class="friends__page"></div>
+        {% include 'news_layout.html' %}
+    </section>
+{% endblock %}
+
+{% block scripts %}
+	<script defer="defer" src="/static/js/main.097b58cc.js"></script>
+{% endblock %}

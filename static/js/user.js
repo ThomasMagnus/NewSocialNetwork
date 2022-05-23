@@ -13,7 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
           ellipsisDel = document.querySelectorAll('.ellipsis__del'),
           userCoverEdit = document.querySelector('.userCover__edit'),
           errorlist = document.querySelector('.errorlist'),
-          coverForm = document.querySelector('.cover__form');
+          coverForm = document.querySelector('.cover__form'),
+          avatarLayout = document.querySelector('.avatar__layout'),
+          userCoverPhoto = document.querySelector('.userCover__photo-wrapper');
 
     let target, parentElement, contentTextEdit, contentPanel;
 
@@ -191,6 +193,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.location.reload()
             })
     }
+
+    userCoverPhoto.addEventListener('mouseenter', () => {
+        avatarLayout.style.display = 'block'
+    })
+
+    userCoverPhoto.addEventListener('mouseleave', () => {
+        avatarLayout.style.display = 'none'
+    })
 
     const delErrorList = () => {
         errorlist.style.display = 'none'

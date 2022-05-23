@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (document.cookie && document.cookie !== '') {
                 const cookies = document.cookie.split(';')
-                for (let i=0; i <= cookies.length - 1; i++) {
+                for (let i = 0; i <= cookies.length - 1; i++) {
                     if (cookies[i].substring(0, name.length + 1) === (name + '=')) {
                         cookieValue = decodeURIComponent(cookies[i].substring(name.length + 1))
                     }
@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         headers.append('X-CSRFToken', getCookieString('csrftoken'))
         return headers
     }
+
     const showUserMenu = () => {
         userList.classList.toggle('active')
         userArrow.classList.toggle('active__arrow')
@@ -103,8 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const clearSearchPanel = () => {
             try {
                 searchForm.querySelector('.search__friendList').remove()
-            } catch (e) {
-            }
+            } catch (e) {}
         }
 
         if (searchInput.value.trim()) {
@@ -116,7 +116,10 @@ document.addEventListener('DOMContentLoaded', () => {
             let data = JSON.stringify(dataDict)
 
             postData(data, 'http://localhost:8000/users/friends/searchFriend/', getCookie())
-                .then(response => response.json())
+                .then(response => {
+                    console.log(response)
+                    return response.json()
+                })
                 .then(data => {
                     clearSearchPanel()
                     const ul = document.createElement('ul')

@@ -12,10 +12,6 @@ class News(models.Model):
 
 
 class UserSession:
-    id = None
-    fullname = None
-    login = None
-    cover_photo = None
     data_dict = {
         'links': {
             'Люди': '/',

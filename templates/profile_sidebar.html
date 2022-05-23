@@ -15,8 +15,13 @@
         <div class="profile__userLogo-wrapper">
             <div class="profile__userLogo">
                 <picture>
-                    <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
-                    <img src="{% static 'img/user_logo.jpg' %}" alt="user__logo"></picture>
+					{% if avatar %}
+						<img src="{{ avatar }}" alt="user_photo">
+					{% else %}
+						<source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
+						<img src="{% static 'img/user_logo.jpg' %}" alt="user_photo">
+					{% endif %}
+				</picture>
             </div>
         </div>
         <p class="profile__name">{{ name }}</p>
