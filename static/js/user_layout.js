@@ -117,7 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             postData(data, 'http://localhost:8000/users/friends/searchFriend/', getCookie())
                 .then(response => {
-                    console.log(response)
                     return response.json()
                 })
                 .then(data => {

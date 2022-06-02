@@ -30,7 +30,6 @@ button, textarea, input {
 
 img {
     width: 100%;
-    height: 100%;
 }
 
 .header {
@@ -91,7 +90,6 @@ img {
 }
 
 .main {
-    padding: 20px 0;
     position: relative;
 }
 

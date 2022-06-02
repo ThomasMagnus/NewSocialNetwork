@@ -99,7 +99,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const element = parentElement.querySelector('.edit__content')
         const contentText = parentElement.querySelector('.content__text')
+        const editPostForm = document.querySelector('.edit_post_form');
         element.remove()
+        editPostForm.remove()
 
         contentPanel.style.display = 'none'
         contentText.style.display = 'block'
@@ -108,6 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const editPostText = () => {
         const editPostForm = document.querySelector('.edit_post_form');
         let postValue = editPostForm.querySelector('.edit__content')
+
+        console.log(postValue)
 
         const formData = {
             editPost: postValue.value,

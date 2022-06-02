@@ -1,0 +1,33 @@
+{% load static %}
+
+<div class="userCover__bottom">
+		<div class="userCover__info">
+			<div class="userCover__photo-wrapper">
+				<div class="userCover__photo">
+					<picture>
+						{% if avatar %}
+							<img src="{{ avatar }}" alt="user_photo">
+						{% else %}
+							<source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
+							<img src="{% static 'img/user_logo.jpg' %}" alt="user_photo">
+						{% endif %}
+					</picture>
+				</div>
+				<div class="avatar__layout">
+					<i class="fa fa-camera" style="font-size:36px;position: absolute;top: 60px;left: 62px"></i>
+				</div>
+			</div>
+			<p class="userCover__name">{{ name }}</p>
+		</div>
+		<div class="userCover__edit_wrapper">
+			<form enctype="multipart/form-data" class="cover__form">
+				{% csrf_token %}
+				{{cover_form}}
+<!--                <input type="file" name="file" id="input_file" class="userCover__edit" multiple>-->
+				<label class="input__file-button" for="input_file">
+					<i class="fa fa-camera" aria-hidden="true"></i>
+					<span class="input__file-button-text">Изменить изображение</span>
+				</label>
+			</form>
+		</div>
+	</div>

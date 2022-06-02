@@ -12,6 +12,7 @@ urlpatterns = [
                   path('createPost/', include('createPosts.urls')),
                   path('friends/', include('friends.urls')),
                   path('friendPage/', include('friends_page.urls')),
+                  path('friendsRequests/', include('friends_requests.urls'))
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:

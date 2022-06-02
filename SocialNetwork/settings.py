@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'users.apps.UserConfig',
     'friends.apps.FriendsConfig',
     'friends_page.apps.FriendsPageConfig',
+    'friends_requests.apps.FriendsRequestsConfig',
     'corsheaders'
 ]
 

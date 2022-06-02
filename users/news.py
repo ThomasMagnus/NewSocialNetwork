@@ -21,7 +21,7 @@ class Parser:
             txt.encoding = 'utf8'
             return txt.text
         except Exception as ex:
-            print(ex)
+            print(repr(ex))
             return False
 
     def get_soup(self):

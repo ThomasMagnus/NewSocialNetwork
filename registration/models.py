@@ -11,8 +11,8 @@ class FriendsTable:
     def add_friend_table(self):
         metadata = MetaData()
         friend = Table(self.friend_login, metadata,
-                       Column('id', Integer, primary_key=True, autoincrement=True),
-                       Column('friends_id', Integer()).foreign_keys(UserFile.id),
+                       Column('id', Integer(), primary_key=True, autoincrement=True),
+                       Column('friend_id', Integer()),
                        Column('friend_name', Text()),
                        Column('friend_login', Text()),
                        Column('friend_email', Text()),
@@ -20,5 +20,5 @@ class FriendsTable:
                        Column('date', DateTime()),
                        Column('request_on_friend', Boolean())
                        )
-
+        print('Done!')
         metadata.create_all(self.engine)

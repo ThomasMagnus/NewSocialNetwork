@@ -19,7 +19,7 @@ from datetime import datetime
 logger = logging.getLogger(name='ex')
 logger.setLevel(logging.ERROR)
 
-file = logging.FileHandler(filename='error-logs.log')
+file = logging.FileHandler(filename='errorLogs.log')
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 file.setFormatter(formatter)
@@ -68,17 +68,18 @@ class CreateUserFile:
                                              last_name=self.form.data["last_name"], password=self.password)
 
         user_profile = UserFile(id=self.id_num, user_name=self.name, user_login=self.user_login, email=self.email,
-                                password=generate_password_hash(self.password), lastJoin=now_date)
+                                password=generate_password_hash(self.password), last_join=now_date)
         self.user.save()
 
         user_profile.save()
-        profile = ProFile(user_id=self.user.id, user_login=self.user_login)
+        profile = ProFile(user_id=self.id_num, user_login=self.user_login)
         profile.save()
 
-        registration(self.user.id, self.name, self.user_login, self.email, generate_password_hash(self.password))
+        registration(self.id_num, self.name, self.user_login, self.email, generate_password_hash(self.password))
 
         creator = FriendsTable(f'friends_{self.user_login}')
         creator.add_friend_table()
+        print(self.user_login)
 
         login(request, self.user)
         request.session['sessionID'] = self.user.id

@@ -39,6 +39,7 @@
 
 .profile__userLogo img {
   border-radius: 50px;
+  height: 56px;
 }
 
 .profile__name {

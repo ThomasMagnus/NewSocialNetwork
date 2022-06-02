@@ -25,6 +25,7 @@ class UserFile(models.Model):
     friend_mass = ArrayField(models.TextField())
     photo = ArrayField(models.TextField())
     community = ArrayField(models.TextField())
+    buffer_zone = models.ImageField(upload_to='media/avatar/buffer/%Y/%m/%d')
 
     def __str__(self):
         return f'{self.email}, {self.user_login}, {self.cover_photo}, {self.id}'

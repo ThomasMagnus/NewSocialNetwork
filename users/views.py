@@ -4,7 +4,6 @@ import json
 import logging
 import os
 
-from django.db.models import QuerySet
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
@@ -13,9 +12,9 @@ from django.core.files.storage import FileSystemStorage
 
 from authorization.models import UserFile
 from createPosts.models import Posts
-from friends.models import Friends
+from friends.models import FriendsData
 from .news import DataNewsCreator
-from services.forms import CoverForm
+from services.forms import CoverForm, AvatarForm
 from .models import UserSession
 from PIL import Image
 
@@ -23,17 +22,17 @@ module_logger = logging.getLogger(name='ex.user')
 
 
 class ReturnUserData:
-    def __init__(self, user_file: QuerySet, name: str, cover_photo, friends_table_name: str, avatar: str):
+    def __init__(self, user_file: UserFile, name: str, cover_photo, friends_table_name: str, avatar: str, buffer: str):
         self.user_file = user_file
         self.name = name
         self.date = datetime.datetime.now().date()
         self.cover_photo = cover_photo
         self.friends_table_name = friends_table_name.strip()
         self.avatar = avatar
+        self.buffer = buffer
 
     def query_friends_table(self) -> list:
-        Friends._meta.db_table = self.friends_table_name
-        friends: list = list(Friends.objects.filter(status=True))
+        friends: list = list(FriendsData.objects.filter(user_login=self.user_file.user_login, status='friend'))
         return friends
 
 
@@ -77,31 +76,34 @@ def user_template(request, user_id):
         module_logger.exception(Posts.DoesNotExist)
     try:
         if request.session['sessionID'] and request.session['sessionID'] == int(user_id):
-
+            print(len(str(UserFile.objects.get(id=user_id).cover_photo).strip()))
             return_user_data: ReturnUserData = ReturnUserData(name=f'{user.first_name} {user.last_name}',
                                                               user_file=UserFile.objects.get(id=user_id),
                                                               cover_photo=UserFile.objects.get(id=user_id).cover_photo,
                                                               friends_table_name=f'friends_friends',
                                                               avatar=UserFile.objects.get(
-                                                                  id=user_id).avatar.name.strip())
+                                                                  id=user_id).avatar.name.strip(),
+                                                              buffer=UserFile.objects.get(
+                                                                  id=user_id).buffer_zone.name)
             return_user_data.query_friends_table()
             news_data = DataNewsCreator().create_news_data()
             cover_form = CoverForm(request.POST, request.FILES)
+            avatar_form = AvatarForm(request.POST, request.FILES)
 
             try:
                 re.findall(r'\w', return_user_data.cover_photo.name)
+
+                if len(str(return_user_data.cover_photo).strip()) == 0:
+                    return_user_data.cover_photo = " "
             except Exception as ex:
                 module_logger.exception(ex)
-                cover_photo = " "
-
-            if len(str(return_user_data.cover_photo).strip()) == 0:
-                cover_photo = " "
+                return_user_data.cover_photo = " "
 
             data_dict = {**UserSession.data_dict,
                          **{'name': return_user_data.name, 'user_id': user_id, 'user_post_dict': post,
                             'date': return_user_data.date,
                             'news_data': news_data, 'cover_photo': return_user_data.cover_photo,
-                            'cover_form': cover_form,
+                            'cover_form': cover_form, 'avatar_form': avatar_form,
                             'friends': return_user_data.query_friends_table(),
                             'avatar': return_user_data.avatar}}
 
@@ -153,3 +155,50 @@ def search_friends(request):
         module_logger.exception(ex)
 
     return HttpResponse(json.dumps(friends_data))
+
+
+def change_avatar(request):
+    if request.method == 'POST':
+        user_id = int(request.session['sessionID'])
+        user = UserFile.objects.get(id=user_id)
+
+        file_name = avatar(request, rf'{os.getcwd()}\media\avatar', f'{os.getcwd()}{user.avatar}')
+        UserFile.objects.filter(id=user_id).update(avatar='/media/avatar/' + file_name)
+
+    return HttpResponse('Файл получен сервером')
+
+
+def buffer_zone(request):
+    if request.method == 'POST':
+        user_id = int(request.session['sessionID'])
+        user = UserFile.objects.get(id=user_id)
+
+        file_name = avatar(request, rf'{os.getcwd()}\media\avatar\buffer', f'{os.getcwd()}{user.buffer_zone}')
+
+        UserFile.objects.filter(id=user_id).update(buffer_zone='/media/avatar/buffer/' + file_name)
+
+        return HttpResponse('/media/avatar/buffer/' + file_name)
+
+
+def avatar(request, path: str, path_del: str):
+    try:
+        os.remove(path_del)
+    except Exception as ex:
+        module_logger.exception(repr(ex))
+
+    try:
+        file = request.FILES
+        fs = FileSystemStorage(location=path)
+        file_name = fs.save(file['file'].name, file['file'])
+        return  file_name
+    except Exception as ex:
+        module_logger.exception(repr(ex))
+
+
+def del_buffer(request):
+    user_id = int(request.session['sessionID'])
+    user = UserFile.objects.get(id=user_id)
+
+    os.remove(f'{os.getcwd()}{user.buffer_zone}')
+    UserFile.objects.filter(id=user_id).update(buffer_zone='')
+    return HttpResponse('Ok')

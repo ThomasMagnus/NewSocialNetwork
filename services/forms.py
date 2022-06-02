@@ -36,3 +36,7 @@ class AuthUserForm(AuthenticationForm):
 class CoverForm(forms.Form):
     cover_photo = ImageField(widget=FileInput(attrs={'class': 'userCover__edit', 'name': 'file', 'id': 'input_file'}),
                       label='')
+
+
+class AvatarForm(forms.Form):
+    file = ImageField(widget=FileInput(attrs={'class': 'file', 'name': 'file'}), label='')

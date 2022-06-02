@@ -69,6 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: data
                 })
                     .then(data => {
+                        console.log(data)
+                        url = data.url
+                        console.log(url)
                         if (data.status === 200) {
                             console.log(data)
                             url = data.url
