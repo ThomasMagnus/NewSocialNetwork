@@ -7,13 +7,13 @@
     <link rel="stylesheet" href="{% static 'styles/user_layout.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/user_layout-double.css' %}">
     <link rel="stylesheet" href="{% static 'css/user.min.css' %}">
-	<meta name="description" content="Web site created using create-react-app"/>
-	<link href="/static/css/main.8e74ae32.css" rel="stylesheet">
+    <meta name="description" content="Web site created using create-react-app"/>
+    <link href="/static/css/main.8e74ae32.css" rel="stylesheet">
 {% endblock %}
 
 {% block title %}{{friend_name}}{% endblock %}
 {% block main %}
-	<section class="userCover">
+    <section class="userCover">
         <div class="userCover__img">
             <picture>
                 {% if cover_friend_photo != " " %}
@@ -30,23 +30,23 @@
                 <div class="userCover__photo-wrapper">
                     <div class="userCover__photo">
                         <picture>
-							{% if friend_avatar != ' ' %}
-								<img src="{{ friend_avatar }}" alt="user_photo">
-							{% else %}
-								<source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
-								<img src="{% static 'img/user_logo.jpg' %}" alt="user_photo">
-							{% endif %}
-						</picture>
+			    {% if friend_avatar != ' ' %}
+				<img src="{{ friend_avatar }}" alt="user_photo">
+			    {% else %}
+				<source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
+				<img src="{% static 'img/user_logo.jpg' %}" alt="user_photo">
+			    {% endif %}
+			</picture>
                     </div>
-					<div class="avatar__layout">
-						<i class="fa fa-camera" style="font-size:36px;position: absolute;top: 60px;left: 62px"></i>
-					</div>
+		    <div class="avatar__layout">
+			<i class="fa fa-camera" style="font-size:36px;position: absolute;top: 60px;left: 62px"></i>
+		    </div>
                 </div>
                 <p class="userCover__name">{{ friend_name }}</p>
             </div>
         </div>
     </section>
-	<section class="friend__wrapper">
+    <section class="friend__wrapper">
         {% include 'profile_sidebar.html' %}
         <div class="friends__page"></div>
         {% include 'news_layout.html' %}
@@ -54,5 +54,5 @@
 {% endblock %}
 
 {% block scripts %}
-	<script defer="defer" src="/static/js/main.48b6a105.js"></script>
+    <script defer="defer" src="/static/js/main.48b6a105.js"></script>
 {% endblock %}

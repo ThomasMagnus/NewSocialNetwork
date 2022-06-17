@@ -15,13 +15,13 @@
         <div class="profile__userLogo-wrapper">
             <div class="profile__userLogo">
                 <picture>
-					{% if avatar %}
-						<img src="{{ avatar }}" alt="user_photo">
-					{% else %}
-						<source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
-						<img src="{% static 'img/user_logo.jpg' %}" alt="user_photo">
-					{% endif %}
-				</picture>
+		    {% if avatar %}
+			<img src="{{ avatar }}" alt="user_photo">
+		    {% else %}
+			<source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
+			<img src="{% static 'img/user_logo.jpg' %}" alt="user_photo">
+		    {% endif %}
+		</picture>
             </div>
         </div>
         <p class="profile__name">{{ name }}</p>
@@ -42,7 +42,7 @@
                 </a>
             </li>
             <li class="profile__item">
-                <a href="" class="profile__link">
+                <a href="http://localhost:8000/photo/" class="profile__link">
                     <i class="fa fa-camera icon" aria-hidden="true"></i>
                     <span>Фото</span>
                 </a>

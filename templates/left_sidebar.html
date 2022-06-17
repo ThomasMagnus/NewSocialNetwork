@@ -7,85 +7,95 @@
         </p>
         <hr>
         {% if friends %}
-			<ul class="profile__list-friends">
-				{% for item in friends %}
-					<li class="profile__item-friends">
-						<a href="http://localhost:8000/friendPage/{{ item.friend_id }}" target="_blank" rel="noopener noreferrer">
-							<div class="profile__list-img">
-								<picture>
-									<source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
-									<img src="{% static 'img/user_logo.jpg' %}" alt="friend_logo">
-								</picture>
-							</div>
-							<p class="profile__item-name">{{ item.friend_firstname }}</p>
-						</a>
-					</li>
-				{% endfor %}
-			</ul>
-		{% else %}
-			<p style="padding: 20px;text-align: center">У вас пока нет друзей</p>
-		{% endif %}
+	    <ul class="profile__list-friends">
+		{% for item in friends %}
+		    <li class="profile__item-friends">
+			<a href="http://localhost:8000/friendPage/{{ item.friend_id }}" target="_blank" rel="noopener noreferrer">
+			    <div class="profile__list-img">
+				<picture>
+				    <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
+				    <img src="{% static 'img/user_logo.jpg' %}" alt="friend_logo">
+				</picture>
+			    </div>
+			    <p class="profile__item-name">{{ item.friend_firstname }}</p>
+			</a>
+		    </li>
+		{% endfor %}
+	    </ul>
+	{% else %}
+	    <p style="padding: 20px;text-align: center">У вас пока нет друзей</p>
+	{% endif %}
     </div>
     <div class="profile__photos back">
         <p class="profile__title">Мои фото</p>
         <hr>
         <div class="profile__photos-imgs">
-            <a href="http://" target="_blank" rel="noopener noreferrer">
-                <div class="profile__photo-img">
-                    <picture>
-                        <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
-                        <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>
-                </div>
-            </a>
-            <a href="http://" target="_blank" rel="noopener noreferrer">
-                <div class="profile__photo-img">
-                    <picture>
-                        <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
-                        <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>
-                </div>
-            </a>
-            <a href="http://" target="_blank" rel="noopener noreferrer">
-                <div class="profile__photo-img">
-                    <picture>
-                        <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
-                        <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>
-                </div>
-            </a>
-            <a href="http://" target="_blank" rel="noopener noreferrer">
-                <div class="profile__photo-img">
-                    <picture>
-                        <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
-                        <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>
-                </div>
-            </a>
-            <a href="http://" target="_blank" rel="noopener noreferrer">
-                <div class="profile__photo-img">
-                    <picture>
-                        <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
-                        <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>
-                </div>
-            </a>
-            <a href="http://" target="_blank" rel="noopener noreferrer">
-                <div class="profile__photo-img">
-                    <picture>
-                        <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
-                        <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>
-                </div>
-            </a>
-            <a href="http://" target="_blank" rel="noopener noreferrer">
-                <div class="profile__photo-img">
-                    <picture>
-                        <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
-                        <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>
-                </div>
-            </a>
-            <a href="http://" target="_blank" rel="noopener noreferrer">
-                <div class="profile__photo-img">
-                    <picture>
-                        <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
-                        <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>
-                </div>
-            </a>
+	    {% for item in photo %}
+		<a href="http://" target="_blank" rel="noopener noreferrer">
+		    <div class="profile__photo-img">
+			<picture>
+			    <source srcset="{{ item }}" type="image/webp">
+			    <img src="{{ item }}" alt="user_photo">
+			</picture>
+		    </div>
+		</a>
+	    {% endfor %}
+{#            <a href="http://" target="_blank" rel="noopener noreferrer">#}
+{#                <div class="profile__photo-img">#}
+{#                    <picture>#}
+{#                        <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">#}
+{#                        <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>#}
+{#                </div>#}
+{#            </a>#}
+{#            <a href="http://" target="_blank" rel="noopener noreferrer">#}
+{#                <div class="profile__photo-img">#}
+{#                    <picture>#}
+{#                        <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">#}
+{#                        <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>#}
+{#                </div>#}
+{#            </a>#}
+{#            <a href="http://" target="_blank" rel="noopener noreferrer">#}
+{#                <div class="profile__photo-img">#}
+{#                    <picture>#}
+{#                        <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">#}
+{#                        <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>#}
+{#                </div>#}
+{#            </a>#}
+{#            <a href="http://" target="_blank" rel="noopener noreferrer">#}
+{#                <div class="profile__photo-img">#}
+{#                    <picture>#}
+{#                        <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">#}
+{#                        <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>#}
+{#                </div>#}
+{#            </a>#}
+{#            <a href="http://" target="_blank" rel="noopener noreferrer">#}
+{#                <div class="profile__photo-img">#}
+{#                    <picture>#}
+{#                        <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">#}
+{#                        <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>#}
+{#                </div>#}
+{#            </a>#}
+{#            <a href="http://" target="_blank" rel="noopener noreferrer">#}
+{#                <div class="profile__photo-img">#}
+{#                    <picture>#}
+{#                        <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">#}
+{#                        <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>#}
+{#                </div>#}
+{#            </a>#}
+{#            <a href="http://" target="_blank" rel="noopener noreferrer">#}
+{#                <div class="profile__photo-img">#}
+{#                    <picture>#}
+{#                        <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">#}
+{#                        <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>#}
+{#                </div>#}
+{#            </a>#}
+{#            <a href="http://" target="_blank" rel="noopener noreferrer">#}
+{#                <div class="profile__photo-img">#}
+{#                    <picture>#}
+{#                        <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">#}
+{#                        <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>#}
+{#                </div>#}
+{#            </a>#}
         </div>
     </div>
 </section>

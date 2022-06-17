@@ -3,26 +3,30 @@ import re
 import json
 import logging
 import os
+from typing import List
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.http import HttpResponse
 from django.core.files.storage import FileSystemStorage
+from django.views.decorators.csrf import csrf_exempt
 
 from authorization.models import UserFile
 from createPosts.models import Posts
 from friends.models import FriendsData
+from photos.models import Photo
+from services.compressor import compress_image
 from .news import DataNewsCreator
 from services.forms import CoverForm, AvatarForm
 from .models import UserSession
-from PIL import Image
 
 module_logger = logging.getLogger(name='ex.user')
 
 
 class ReturnUserData:
-    def __init__(self, user_file: UserFile, name: str, cover_photo, friends_table_name: str, avatar: str, buffer: str):
+    def __init__(self, user_file: UserFile, name: str, cover_photo, friends_table_name: str, avatar: str, buffer: str,
+                 photo: List[str]):
         self.user_file = user_file
         self.name = name
         self.date = datetime.datetime.now().date()
@@ -30,35 +34,11 @@ class ReturnUserData:
         self.friends_table_name = friends_table_name.strip()
         self.avatar = avatar
         self.buffer = buffer
+        self.photo = photo
 
     def query_friends_table(self) -> list:
         friends: list = list(FriendsData.objects.filter(user_login=self.user_file.user_login, status='friend'))
         return friends
-
-
-def compress_image(image_name, new_size_ratio=0.9, quality=60, width=None, height=None, to_jpg=True) -> str:
-    img = Image.open(image_name)
-
-    if new_size_ratio < 1.0:
-        img.resize((int(img.size[0] * new_size_ratio), int(img.size[1] * new_size_ratio)), Image.ANTIALIAS)
-        print("[+] New Image shape:", img.size)
-    elif width and height:
-        img.resize((width, height), Image.ANTIALIAS)
-
-    filename, ext = os.path.splitext(image_name)
-
-    if to_jpg:
-        new_filename: str = f'{filename}_compressed.jpg'
-    else:
-        new_filename: str = f'{filename}_compressed{ext}'
-
-    try:
-        img.save(new_filename, quality=quality, optimize=True)
-    except:
-        img = img.convert('RBG')
-        img.save(new_filename, quality=quality, optimize=True)
-
-    return new_filename
 
 
 def user_template(request, user_id):
@@ -76,7 +56,6 @@ def user_template(request, user_id):
         module_logger.exception(Posts.DoesNotExist)
     try:
         if request.session['sessionID'] and request.session['sessionID'] == int(user_id):
-            print(len(str(UserFile.objects.get(id=user_id).cover_photo).strip()))
             return_user_data: ReturnUserData = ReturnUserData(name=f'{user.first_name} {user.last_name}',
                                                               user_file=UserFile.objects.get(id=user_id),
                                                               cover_photo=UserFile.objects.get(id=user_id).cover_photo,
@@ -84,7 +63,10 @@ def user_template(request, user_id):
                                                               avatar=UserFile.objects.get(
                                                                   id=user_id).avatar.name.strip(),
                                                               buffer=UserFile.objects.get(
-                                                                  id=user_id).buffer_zone.name)
+                                                                  id=user_id).buffer_zone.name,
+                                                              photo=[str(x.path).strip() for x in
+                                                                     Photo.objects.filter(user_id=user_id).order_by(
+                                                                         '-date_load')[0:8]])
             return_user_data.query_friends_table()
             news_data = DataNewsCreator().create_news_data()
             cover_form = CoverForm(request.POST, request.FILES)
@@ -105,7 +87,8 @@ def user_template(request, user_id):
                             'news_data': news_data, 'cover_photo': return_user_data.cover_photo,
                             'cover_form': cover_form, 'avatar_form': avatar_form,
                             'friends': return_user_data.query_friends_table(),
-                            'avatar': return_user_data.avatar}}
+                            'avatar': return_user_data.avatar,
+                            'photo': return_user_data.photo}}
 
             return render(request, 'user.html', data_dict)
         else:
@@ -145,6 +128,7 @@ def change_cover(request):
     return HttpResponse('Изображение получено!')
 
 
+@csrf_exempt
 def search_friends(request):
     try:
         result = json.loads(request.body)
@@ -190,7 +174,7 @@ def avatar(request, path: str, path_del: str):
         file = request.FILES
         fs = FileSystemStorage(location=path)
         file_name = fs.save(file['file'].name, file['file'])
-        return  file_name
+        return file_name
     except Exception as ex:
         module_logger.exception(repr(ex))
 

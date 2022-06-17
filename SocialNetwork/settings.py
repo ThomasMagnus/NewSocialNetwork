@@ -1,5 +1,6 @@
 import os.path
 from pathlib import Path
+from typing import List, Dict
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,33 +24,22 @@ INSTALLED_APPS = [
     'friends.apps.FriendsConfig',
     'friends_page.apps.FriendsPageConfig',
     'friends_requests.apps.FriendsRequestsConfig',
+    'photos.apps.PhotosConfig',
     'corsheaders'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_TRUSTED_ORIGINS = [
-    "https://example.com",
-    "https://sub.example.com",
-    "https://localhost:4001",
-    "https://127.0.0.1:3000/",
-    "https://localhost:8000/",
-]
-
-# CSRF_TRUSTED_ORIGINS = [
-#     ''
-# ]
-
-CORS_ALLOW_HEADERS = [
+CORS_ALLOW_HEADERS: List[str] = [
     "accept",
     "accept-encoding",
     "authorization",
@@ -59,20 +49,20 @@ CORS_ALLOW_HEADERS = [
     "user-agent",
     "x-csrftoken",
     "x-requested-with",
+    'withcredentials',
+    "x-xsrf-token",
+    "credentials",
+    "access-control-allow-origin",
+    "access-control-expose-headers"
 ]
-
-CORS_ORIGIN_ALLOW_ALL = True # If this is used then `CORS_ORIGIN_WHITELIST` will not have any effect
-CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:4001',
-] # If this is used, then not need to use `CORS_ORIGIN_ALLOW_ALL = True`
-CORS_ORIGIN_REGEX_WHITELIST = [
-    'http://localhost:4001',
-]
-
-CSRF_COOKIE_SECURE = False
-CSRF_COOKIE_HTTPONLY = False
-CORS_ALLOW_ALL_ORIGINS = True
+CSRF_COOKIE_NAME = "rYSO3aR7ZUHFyWeB8Lms2uuHs1Kq6f0KE7oVP3Q6ZHXd30tGoYtrOWgFudTDa9Yh"
+CORS_ALLOW_METHODS: List[str] = ['DELETE', 'GET', 'OPTIONS', 'PATCH', 'POST', 'PUT']
+CORS_ORIGIN_ALLOW_ALL: bool = True
+CORS_ALLOW_CREDENTIALS: bool = True
+ACCESS_CONTROL_ALLOW_CREDENTIALS: True
+CSRF_COOKIE_SECURE: bool = False
+CSRF_COOKIE_HTTPONLY: bool = False
+ACCESS_CONTROL_ALLOW_ORIGINS: List[str] = ["http://localhost:3000", "https://localhost:3000", "http://localhost:8000"]
 
 ROOT_URLCONF = 'SocialNetwork.urls'
 
@@ -106,11 +96,7 @@ CACHES = {
 
 WSGI_APPLICATION = 'SocialNetwork.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-DATABASES = {
+DATABASES: Dict[str, Dict[str, str]] = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'SocialNetwork',
@@ -125,7 +111,7 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
+AUTH_PASSWORD_VALIDATORS: List[Dict[str, str]] = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },

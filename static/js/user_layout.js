@@ -125,17 +125,31 @@ document.addEventListener('DOMContentLoaded', () => {
                     ul.classList.add('search__friendList')
                     searchForm.append(ul)
 
-                    data.forEach(item => {
+                    for (let i = 0; i < data.length; i++){
                         let users;
                         if (data.length > 7) {
-                            users = new Users(item[0], item[1], item[2])
+                            users = new Users(data[i][0], data[i][1], data[i][2])
+                            ul.append(`<li>Показать всех</li>`)
+                            break
                         } else {
-                            users = new Users(item[0], item[1], item[2], data.length)
+                            users = new Users(data[i][0], data[i][1], data[i][2], data.length)
                         }
 
                         users.createUSer(ul)
-                        console.log(`User: ${item[0]}, id: ${item[1]}`)
-                    })
+                        console.log(`User: ${data[i][0]}, id: ${data[i][1]}`)
+                    }
+
+                    // data.forEach(item => {
+                    //     let users;
+                    //     if (data.length > 7) {
+                    //         users = new Users(item[0], item[1], item[2])
+                    //     } else {
+                    //         users = new Users(item[0], item[1], item[2], data.length)
+                    //     }
+                    //
+                    //     users.createUSer(ul)
+                    //     console.log(`User: ${item[0]}, id: ${item[1]}`)
+                    // })
 
                     searchfriendItem = document.querySelectorAll('.search__friendItem a')
                     searchfriendItem.forEach(item => item.addEventListener('click', e => getFriendPage(e)))

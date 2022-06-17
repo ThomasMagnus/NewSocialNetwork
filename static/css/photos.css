@@ -1,0 +1,95 @@
+.photos {
+	background-color: #fff;
+	border-radius: 10px 10px 0 0;
+	padding-bottom: 20px;
+ 	width: 750px;
+}
+.photos__top {
+	border-bottom: 2px solid gray;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 20px;
+}
+.photos__link {
+	background-color: #2186c4;
+	border-radius: 10px;
+	padding: 10px 20px;
+}
+.photos__input {
+	visibility: hidden;
+}
+.photos__link {
+	color: white;
+}
+.photos__title {
+	font-size: 25px;
+	color: #2a2e33;
+	padding: 20px;
+}
+ .photos__list {
+	 display: flex;
+	 list-style-type: none;
+	 justify-content: center;
+	 margin-top: 20px;
+	 flex-wrap: wrap;
+}
+ .photos__item {
+	 cursor: pointer;
+	 margin: 10px 20px;
+	 width: 200px;
+}
+ .photos__img {
+	 width: 200px;
+	 height: 150px;
+}
+ .photos__img img {
+	 width: 100%;
+	 height: 100%;
+}
+ .photos__bottom {
+	 display: flex;
+	 flex-direction: column;
+	 align-items: center;
+}
+ .photos__btn {
+	 background-color: #2186c4;
+	 border: none;
+	 border-radius: 20px;
+	 color: #fff;
+	 cursor: pointer;
+	 padding: 10px 20px;
+	 margin-top: 20px;
+	 transition: background-color, color 0.3s linear;
+}
+ .photos__btn:hover {
+	 color: #000;
+	 background-color: rgba(33, 134, 196, .7);
+}
+.modalPhoto {
+	 display: none;
+	 align-items: center;
+	 justify-content: center;
+	 height: 100%;
+	 width: 100%;
+	 background-color: rgba(0, 0, 0, .4);
+	 position: fixed;
+	 top: 0;
+	 right: 0;
+	 left: 0;
+	 bottom: 0;
+}
+ .modalPhoto__img {
+	 width: 900px;
+}
+ .modalPhoto__img img {
+	 position: relative;
+	 width: 100%;
+	 max-height: 900px;
+}
+.file {
+	visibility: hidden;
+}
+.img__wrapper {
+	position: relative;
+}

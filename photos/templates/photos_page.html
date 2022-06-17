@@ -1,0 +1,62 @@
+{% extends 'user_layout.html' %}
+{% load static %}
+
+{% block link %}
+    <link rel="stylesheet" href="{% static 'css/friends_menu.min.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/user_layout.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/user_layout-double.css' %}">
+    <link rel="stylesheet" href="{% static 'css/user.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/photos.css' %}">
+{% endblock %}
+
+{% block title %}Фото{% endblock %}
+
+{% block main %}
+    <section class="section__wrapper">
+	{% include 'profile_sidebar.html' %}
+	<section class="photos">
+	    <div class="photos__wrapper">
+		<div class="photos__top">
+		    <h3 class="photos__title">Фото</h3>
+		    <form class="photos__add">
+			{% csrf_token %}
+			{{ form }}
+			<a class="photos__link" href="/">Добавить фото</a>
+		    </form>
+		</div>
+	    </div>
+
+            <div class="photos__bottom">
+                <ul class="photos__list">
+		    {% for item in photo %}
+			<li class="photos__item">
+			    <div class="photos__img">
+				<img src={{ item.path }} alt=""  data-id={{ item.id }}>
+			    </div>
+			</li>
+		    {% endfor %}
+		</ul>
+	    {% if pagination %}
+		<form class="photos__form">
+		    {% csrf_token %}
+		    <button class="photos__btn">Показать ещё</button>
+		</form>
+	    {% endif %}
+	    </div>
+	</section>
+    	{% include 'news_layout.html' %}
+    </section>
+    <div class="modalPhoto">
+	<div class="modalPhoto__img">
+	    <div class="img__wrapper">
+		<img src="" alt="">
+		<i class="fa fa-trash" aria-hidden="true" title="Удалить фото"
+		   style="font-size:18px;color:#fff;cursor:pointer;position:absolute;bottom:20px;right:10px;opacity:0;transition:opacity 0.3s linear"></i>
+	    </div>
+	</div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/photos.js' %}"></script>
+{% endblock %}
