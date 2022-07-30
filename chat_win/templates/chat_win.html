@@ -1,0 +1,42 @@
+{% extends 'user_layout.html' %}
+{% load static %}
+
+{% block link %}
+    <link rel="stylesheet" href="{% static 'css/user.min.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/messages/messages.css' %}">
+{% endblock %}
+
+{% block title %}Сообщения{% endblock %}
+
+{% block main %}
+    <section class="section__wrapper">
+	{% include 'profile_sidebar.html' %}
+	<section class="messages">
+	    <h3 class="messages__title">Сообщения</h3>
+	    <ul class="messages__list">
+		{% for item in chats %}
+		    <li class="messages__item">
+			<a class="messages__link" href='/inx={{ item.chat_id }}'>
+			    <div class="messages__img">
+			    {% if item.friend_avatar %}
+				<img src="{{ item.friend_avatar }}" alt="user_photo">
+			    {% else %}
+				<img src="{% static 'img/user_logo.jpg' %}" alt="user_photo">
+			    {% endif %}
+			    </div>
+			<div class="messages__properties">
+			    <p class="messages__name">{{ item.name }}</p>
+			    <p class="messages__text">{{ item.message_text }}</p>
+			</div>
+			</a>
+		    </li>
+		{% endfor %}
+	    </ul>
+	</section>
+	{% include 'news_layout.html' %}
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/messages_page/messagesPage.js' %}"></script>
+{% endblock %}

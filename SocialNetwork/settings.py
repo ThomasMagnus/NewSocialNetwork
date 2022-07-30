@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'friends_page.apps.FriendsPageConfig',
     'friends_requests.apps.FriendsRequestsConfig',
     'photos.apps.PhotosConfig',
+    'chat_win.apps.ChatWinConfig',
     'corsheaders'
 ]
 

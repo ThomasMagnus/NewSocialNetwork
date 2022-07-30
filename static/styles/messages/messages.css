@@ -1,0 +1,50 @@
+.messages {
+    background-color: #fff;
+    border-radius: 10px 10px 0 0;
+    width: 755px;
+}
+
+.messages__item {
+    list-style-type: none;
+}
+
+.messages__title {
+    font-size: 25px;
+    padding: 20px;
+}
+
+.messages__link {
+    align-items: center;
+    color: #000;
+    cursor: pointer;
+    display: flex;
+    padding: 10px;
+    width: 100%;
+}
+
+.messages__link:hover {
+    background-color: #dce1e6;
+}
+
+.messages__img {
+    height: 60px;
+}
+
+.messages__img img {
+    width: 60px;
+    height: 100%;
+    border-radius: 10%;
+}
+
+.messages__properties {
+    margin-left: 10px;
+}
+
+.messages__name {
+    width: 150px;
+}
+
+.messages__text {
+    width: 100vh;
+}
+

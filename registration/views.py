@@ -13,7 +13,7 @@ from django.contrib.auth import login
 from services.generate_id import generate_random_num
 from authorization.models import UserFile
 from werkzeug.security import generate_password_hash
-from .models import FriendsTable
+from .models import FriendsTable, MessageTable
 from datetime import datetime
 
 logger = logging.getLogger(name='ex')
@@ -77,8 +77,8 @@ class CreateUserFile:
 
         registration(self.id_num, self.name, self.user_login, self.email, generate_password_hash(self.password))
 
-        creator = FriendsTable(f'friends_{self.user_login}')
-        creator.add_friend_table()
+        FriendsTable(f'friends_{self.user_login}').add_table()
+        MessageTable(f'{self.user_login}_toSendMessage').add_table()
         print(self.user_login)
 
         login(request, self.user)
